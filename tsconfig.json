@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+        "lib": [
+            "DOM",
+            "DOM.Iterable",
+            "ES2017",
+            "ESNext"
+        ],
+        "module": "CommonJS",
+        "outDir": "dist",
+        "rootDir": "src",
+        "strict": true
+    },
+    "exclude": [
+        "tests/**/*",
+        "jest.setup.ts"
+    ]
+}
