@@ -1,1 +1,1 @@
-module.exports = require('../src/TeniosClient').default;
+module.exports = require('../src');
