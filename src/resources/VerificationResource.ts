@@ -10,9 +10,8 @@ export type DocumentType =
 
 export type NumberType = 'GEOGRAPHICAL'
 
-export default class Verification extends Resource {
+export class VerificationResource extends Resource {
     async create(params: {
-        access_key: string
         area_code: string
         city: string
         country: string
@@ -27,7 +26,6 @@ export default class Verification extends Resource {
     }
 
     async order(params: {
-        access_key: string
         number_type: NumberType
         verification_id: string
         link_to_number?: string

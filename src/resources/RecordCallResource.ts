@@ -1,8 +1,7 @@
 import Resource from "./Resource";
 
-export default class RecordCall extends Resource {
+export class RecordCallResource extends Resource {
     async start(params: {
-        access_key: string
         call_uuid: string
     }) {
         return this.httpClient.post<typeof params, {
@@ -11,7 +10,6 @@ export default class RecordCall extends Resource {
     }
 
     async stop(params: {
-        access_key: string
         call_uuid: string
     }) {
         return this.httpClient.post<typeof params, {

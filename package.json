@@ -1,45 +1,48 @@
 {
-    "author": "André Matthies <matthiez@gmail.com> (https://github.com/matthiez)",
-    "bugs": {
-        "email": "matthiez@gmail.com",
-        "url": "https://github.com/matthiez/tenios-client"
-    },
-    "description": "Official API client for sms77",
-    "devDependencies": {
-        "@types/globalthis": "^1.0.1",
-        "@types/jest": "^27.4.1",
-        "@types/node": "^14.18.12",
-        "@types/node-fetch": "^2.6.1",
-        "browserify": "^17.0.0",
-        "jest": "^27.5.1",
-        "node-fetch": "^2.6.7",
-        "ts-jest": "^27.1.3",
-        "tsify": "^5.0.4",
-        "typescript": "^4.6.2"
-    },
-    "files": [
-        "dist/**/*"
-    ],
-    "homepage": "https://github.com/matthiez/tenios-client",
-    "keywords": [
-        "tenios"
-    ],
-    "license": "MIT",
-    "main": "dist/TeniosClient.umd.js",
-    "name": "tenios-client",
-    "peerDependencies": {
-        "node-fetch": "^2.6.7"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/matthiez/tenios-client.git"
-    },
-    "scripts": {
-        "build": "rm -rf dist && tsc && npm run bundle",
-        "bundle": "node build/build.js",
-        "prepublishOnly": "npm run build",
-        "test": "npx jest"
-    },
-    "types": "dist/TeniosClient.d.ts",
-    "version": "1.0.0"
+  "author": "André Matthies <matthiez@gmail.com> (https://github.com/matthiez)",
+  "bugs": {
+    "email": "matthiez@gmail.com",
+    "url": "https://github.com/matthiez/tenios-voice-client"
+  },
+  "description": "API client for tenios voice API",
+  "devDependencies": {
+    "@types/globalthis": "^1.0.1",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^14.18.12",
+    "@types/node-fetch": "^2.6.1",
+    "browserify": "^17.0.0",
+    "jest": "^27.5.1",
+    "node-fetch": "^2.6.7",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.3",
+    "tsify": "^5.0.4",
+    "typedoc": "^0.22.13",
+    "typescript": "^4.6.2"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "homepage": "https://github.com/matthiez/tenios-voice-client",
+  "keywords": [
+    "tenios"
+  ],
+  "license": "MIT",
+  "main": "dist/index.umd.js",
+  "name": "tenios-client",
+  "peerDependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthiez/tenios-voice-client.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc && npm run bundle",
+    "bundle": "node build/build.js",
+    "document": "npx typedoc src/index.ts",
+    "prepublishOnly": "npm run build && npm run document",
+    "test": "npx jest"
+  },
+  "types": "dist/index.d.ts",
+  "version": "0.0.1"
 }

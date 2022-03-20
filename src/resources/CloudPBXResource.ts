@@ -1,8 +1,7 @@
 import Resource from "./Resource";
 
-export default class CloudPBX extends Resource {
+export class CloudPBXResource extends Resource {
     async list(params: {
-        access_key: string
         page: number
         page_size: number
     }) {
@@ -17,15 +16,14 @@ export default class CloudPBX extends Resource {
                 sip_login_enabled: boolean
                 user_name: string
             }[]
+            page: number
+            page_size: number
             success: boolean
             total_items: number
-            page_size: number
-            page: number
         }>('/cloud-pbx/list', params)
     }
 
     async upsert(params: {
-        access_key: string
         call_history_enabled: boolean
         email?: string
         first_name: string

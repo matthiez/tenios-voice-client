@@ -4,21 +4,56 @@ export type TeniosResponse<TRequestParams extends {}, TResponse extends {}> = TR
     fields?: (keyof TRequestParams)[]
 }
 
-enum Method {
+export enum Method {
     GET,
     POST,
 }
 
-type RequestPayload = { [k: string]: any }
+export type RequestPayload = { [k: string]: any }
 
-export default class HttpClient {
+export type HttpClientOptions = {
+    accessKey?: string
+    debug?: boolean
+    fetch?: typeof fetch
+}
+
+export class HttpClient {
     public static readonly BASE_URL = 'https://api.tenios.com'
 
-    constructor(protected options: {
-        accessKey?: string
-        debug?: boolean
-    } = {}) {
-        if (!options.accessKey) this.options.accessKey = process.env.TENIOS_ACCESS_KEY
+    constructor(options: HttpClientOptions = {}) {
+        this.accessKey = options.accessKey || process.env.TENIOS_ACCESS_KEY
+        this.debug = Boolean(options.debug)
+        if (options.fetch) this.fetch = fetch
+    }
+
+    private _accessKey?: string
+
+    get accessKey() {
+        return this._accessKey
+    }
+
+    set accessKey(accessKey) {
+        this._accessKey = accessKey
+    }
+
+    private _debug = false
+
+    get debug() {
+        return this._debug
+    }
+
+    set debug(debug) {
+        this._debug = debug
+    }
+
+    private _fetch = fetch
+
+    get fetch() {
+        return this._fetch
+    }
+
+    set fetch(fetch) {
+        this._fetch = fetch
     }
 
     async get<TParams, TRes>(endpoint: string, payload: RequestPayload): Promise<TeniosResponse<TParams, TRes>> {
@@ -29,28 +64,29 @@ export default class HttpClient {
         return await this.request(Method.POST, endpoint, payload)
     }
 
-    setAccessKey(apiKey: string) {
-        this.options.accessKey = apiKey
-    }
-
     protected async request<R>(method: Method, endpoint: string, payload: RequestPayload): Promise<R> {
-        const url = `${HttpClient.BASE_URL}/${endpoint}`
+        let url = `${HttpClient.BASE_URL}/${endpoint}`
 
-        if (!this.options.accessKey) throw new Error('Access token is missing')
-        payload.access_key = this.options.accessKey
+        if (!this.accessKey) throw new Error('Access token is missing')
+        payload.access_key = this.accessKey
 
         const opts: RequestInit = {
-            body: JSON.stringify(payload),
             headers: {
                 'Content-Type': 'application/json',
             },
             method: Method[method],
         }
 
-        const res = await fetch(url, opts)
+        if (method === Method.GET) {
+            const params = new URLSearchParams
+            Object.entries(payload).forEach((([k, v]) => params.set(k, v)))
+            url += `?${params.toString()}`
+        } else opts.body = JSON.stringify(payload)
+
+        const res = await this.fetch(url, opts)
         const body = await res.json()
 
-        if (this.options.debug) console.debug({
+        if (this.debug) console.debug({
             request: {
                 ...opts,
                 url,

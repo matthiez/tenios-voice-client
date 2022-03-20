@@ -58,13 +58,12 @@ export type HangupCause =
 
 export type SourceType = "FIXED_LINE" | string
 
-export default class CDRS extends Resource {
+export class CDRSResource extends Resource {
     async retrieve(params: {
-        access_key: string
-        start_date_from: string
-        start_date_to: string
         page: number
         page_size: number
+        start_date_from: string
+        start_date_to: string
     }) {
         return this.httpClient.post<typeof params, {
             items: {
@@ -87,14 +86,13 @@ export default class CDRS extends Resource {
                 start_stamp: string
                 uuid: string
             }[]
-            page_size: number
             page: number
+            page_size: number
             total_items: number
         }>('/cdrs/retrieve', params)
     }
 
     async count(params: {
-        access_key: string
         start_date_from: string
         start_date_to: string
     }) {

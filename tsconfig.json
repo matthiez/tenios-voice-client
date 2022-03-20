@@ -11,8 +11,8 @@
         ],
         "module": "CommonJS",
         "outDir": "dist",
-        "rootDir": "src",
-        "strict": true
+        "strict": true,
+        "target": "ES6"
     },
     "exclude": [
         "tests/**/*",

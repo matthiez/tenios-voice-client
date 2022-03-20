@@ -1,10 +1,9 @@
 import Resource from "./Resource";
 
-export type AgentState = 'READY' | 'NOT_READY'
+export type AgentState = 'NOT_READY' | 'READY'
 
-export default class ACD extends Resource {
+export class ACDResource extends Resource {
     async retrieveAgentState(params: {
-        access_key: string
         email: string
     }) {
         return this.httpClient.get<typeof params, {
@@ -14,7 +13,6 @@ export default class ACD extends Resource {
     }
 
     async changeAgentState(params: {
-        access_key: string
         email: string
         nrr?: string
         state: AgentState

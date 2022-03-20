@@ -10,9 +10,8 @@ export type CallbackStatus =
     | 'CONNECTED'
     | 'DISCONNECTED'
 
-export default class Callback extends Resource {
+export class CallbackResource extends Resource {
     async init(params: {
-        access_key: string
         callback_config_id: string
         callback_number: string
         delay: number
@@ -23,7 +22,6 @@ export default class Callback extends Resource {
     }
 
     async status(params: {
-        access_key: string
         id: string
     }) {
         return this.httpClient.post<typeof params, {
